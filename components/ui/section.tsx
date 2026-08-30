@@ -3,15 +3,16 @@ import { Container } from "./container";
 import { Flex } from "./flex";
 
 type Props = {
+    id?: string
     className?: string
     containerClassName?: string
     children?: React.ReactNode
 }
 
-export function Section({ className, containerClassName, children }: Props) {
+export function Section({ id, className, containerClassName, children }: Props) {
     return (
         <Flex className={cn(className)}>
-            <Container className={cn(containerClassName)}>
+            <Container id={id} className={cn(containerClassName)}>
                 {children}
             </Container>
         </Flex>
@@ -44,7 +45,7 @@ export function SectionTitle({ className, children }: Props) {
 
 export function SectionDescription({ className, children }: Props) {
     return (
-        <p className={cn("text-lg text-muted-foreground max-w-2xl", className)}>
+        <p className={cn("text-base text-muted-foreground max-w-2xl", className)}>
             {children}
         </p>
     )
