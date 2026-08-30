@@ -15,7 +15,7 @@ export function Projects() {
             </SectionHeader>
             <SectionContent>
                 <Tabs defaultValue="nextjs" className='w-full gap-3'>
-                    <TabsList className='sticky top-36 z-10 not-md:w-full overflow-x-auto justify-start scrollbar-none'>
+                    <TabsList className='not-md:sticky top-38.5 z-10 not-md:w-full overflow-x-auto justify-start scrollbar-none'>
                         <TabsTrigger value="nextjs">NextJS</TabsTrigger>
                         <TabsTrigger value="python">Python</TabsTrigger>
                         <TabsTrigger value="n8n">n8n</TabsTrigger>
