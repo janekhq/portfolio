@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from "react"
 import { motion } from "motion/react"
 import type { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Grid } from "./grid"
 
 export type ScrollProgressItem = {
     id: string
     label: string
-    icon: LucideIcon
+    icon: LucideIcon | any
     href?: string
     circleProgress: number
 }
@@ -18,7 +19,7 @@ function ScrollProgressIcon({ item, showLine }: { item: ScrollProgressItem, show
     const iconRef = useRef<any>(null)
 
     return (
-        <div key={item.id} className="relative flex-1">
+        <div key={item.id} className="relative">
 
             {/* line */}
             {showLine && (
@@ -60,18 +61,18 @@ function ScrollProgressIcon({ item, showLine }: { item: ScrollProgressItem, show
     )
 }
 
-export function ScrollProgress({ items, className }: { items: ScrollProgressItem[], className?: string }) {
+export function ScrollProgress({ items }: { items: ScrollProgressItem[] }) {
     return (
-        <div className={cn("flex", className)}>
+        <Grid className="grid-cols-4">
             {items.map((item, i) => <ScrollProgressIcon item={item} showLine={i < items.length - 1} key={i} />)}
-        </div>
+        </Grid>
     )
 }
 
 type Item = {
     id: string
     label: string
-    icon: LucideIcon
+    icon: LucideIcon | any
     href?: string
 }
 
@@ -123,32 +124,4 @@ export function ScrollProgressWrapper({ items }: { items: Item[] }) {
     }, [items])
 
     return <ScrollProgress items={progress} />
-}
-
-import { Code2, MessageSquare, PanelsTopLeft } from "lucide-react"
-
-const items = [
-    { id: "projekty", label: "Projekty", icon: PanelsTopLeft },
-    { id: "technologie", label: "Technologie", icon: Code2 },
-    { id: "opinie", label: "Opinie", icon: MessageSquare },
-]
-
-export function ScrollBarDemo() {
-    return (
-        <>
-            <ScrollProgressWrapper items={items} />
-
-            <main className="space-y-40">
-                {items.map((item) => (
-                    <section
-                        key={item.id}
-                        id={item.id}
-                        className="flex min-h-screen items-center justify-center"
-                    >
-                        <h2 className="text-7xl font-bold">{item.label}</h2>
-                    </section>
-                ))}
-            </main>
-        </>
-    )
 }

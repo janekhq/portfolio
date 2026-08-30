@@ -16,7 +16,7 @@ import { BotMessageSquareIcon } from "./ui/bot-message-square";
 import { UserIcon } from "./ui/user";
 import { AtSignIcon } from "./ui/at-sign";
 import { Kbd } from "./ui/kbd";
-import { ScrollBarDemo, ScrollProgressWrapper } from "./ui/scroll-progress";
+import { ScrollProgressWrapper } from "./ui/scroll-progress";
 import { BlocksIcon } from "./ui/blocks";
 import { RocketIcon } from "./ui/rocket";
 import { MessageCircleMoreIcon } from "./ui/message-circle-more";
@@ -192,7 +192,7 @@ export function Header() {
                     <CallButton />
                 </Flex>
             </Flex>
-            <Flex className="max-w-lg w-full mx-auto rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
+            <Flex className="p-1 mx-auto rounded-xl bg-card/10 backdrop-blur-xl border border-border/50">
                 <ScrollProgressWrapper items={items} />
             </Flex>
         </Container>
