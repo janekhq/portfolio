@@ -7,6 +7,7 @@ import { flushSync } from "react-dom"
 import { cn } from "@/lib/utils"
 import { MoonIcon } from "./moon"
 import { SunIcon } from "./sun"
+import { useTheme } from "next-themes"
 
 export type TransitionVariant =
   | "circle"
@@ -157,14 +158,13 @@ export const AnimatedThemeToggler = ({
   duration = 400,
   variant,
   fromCenter = false,
-  theme,
+  theme: defaultTheme,
   onThemeChange,
   ...props
 }: AnimatedThemeTogglerProps) => {
   const shape = variant ?? "circle"
-  const isControlled = theme !== undefined
-  const [internalIsDark, setInternalIsDark] = useState(false)
-  const isDark = isControlled ? theme === "dark" : internalIsDark
+  const { theme, resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   const buttonRef = useRef<HTMLButtonElement>(null)
   const isTransitioningRef = useRef(false)
   const activeAnimRef = useRef<Animation | null>(null)
@@ -184,24 +184,6 @@ export const AnimatedThemeToggler = ({
       root.style.removeProperty("--magicui-theme-vt-clip-from")
     }
   }, [cancelAnim])
-
-  useEffect(() => {
-    if (isControlled) return
-
-    const updateTheme = () => {
-      setInternalIsDark(document.documentElement.classList.contains("dark"))
-    }
-
-    updateTheme()
-
-    const observer = new MutationObserver(updateTheme)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    })
-
-    return () => observer.disconnect()
-  }, [isControlled])
 
   const toggleTheme = useCallback(() => {
     const button = buttonRef.current
@@ -234,16 +216,9 @@ export const AnimatedThemeToggler = ({
     )
 
     const applyTheme = () => {
-      const newTheme = !isDark
-      // Always toggle the class synchronously so the View Transitions API
-      // snapshots the new theme inside the startViewTransition callback.
-      document.documentElement.classList.toggle("dark")
-      if (isControlled) {
-        onThemeChange?.(newTheme ? "dark" : "light")
-      } else {
-        setInternalIsDark(newTheme)
-        localStorage.setItem("theme", newTheme ? "dark" : "light")
-      }
+      const newTheme = isDark ? "light" : "dark"
+      setTheme(newTheme)
+      onThemeChange?.(newTheme)
     }
 
     if (typeof document.startViewTransition !== "function") {
@@ -282,7 +257,7 @@ export const AnimatedThemeToggler = ({
       flushSync(applyTheme)
     })
     if (typeof transition?.finished?.finally === "function") {
-      transition.finished.finally(cleanup).catch(() => {})
+      transition.finished.finally(cleanup).catch(() => { })
     } else {
       cleanup()
     }
@@ -305,14 +280,13 @@ export const AnimatedThemeToggler = ({
           )
           activeAnimRef.current = anim
         })
-        .catch(() => {})
+        .catch(() => { })
     }
   }, [
     shape,
     fromCenter,
     duration,
     isDark,
-    isControlled,
     onThemeChange,
     cancelAnim,
   ])
