@@ -1,11 +1,12 @@
 'use client'
 
 import { useTheme } from "next-themes";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Container } from "./ui/container";
 import { Flex } from "./ui/flex";
 import { Particles } from "./ui/particles";
 import { AnimatedSpan, Terminal, TypingAnimation } from "./ui/terminal";
+import Link from "next/link";
 
 function HeroTerminal() {
     return (
@@ -44,7 +45,7 @@ export function Hero() {
     const { theme } = useTheme()
 
     return (
-        <Flex className="relative w-full items-center justify-center overflow-hidden" id='hero'>
+        <Flex className="relative w-full items-center justify-center overflow-hidden scroll-mt-32" id='hero'>
 
             <Particles className="absolute inset-0 z-0" color={theme === 'light' ? '#000' : '#fff'} />
 
@@ -61,12 +62,10 @@ export function Hero() {
                     </p>
 
                     <Flex className="flex-row gap-2">
-                        <Button>
+                        <Link href='#projects' className={buttonVariants({ variant: 'default' })}>
                             Zobacz projekty
-                        </Button>
-                        <Button variant='outline'>
-                            Skontaktuj się
-                        </Button>
+                        </Link>
+                        <Button variant='outline' render={<Link href='#contact'>Skontaktuj się</Link>}></Button>
                     </Flex>
                 </Flex>
 

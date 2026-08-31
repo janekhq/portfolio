@@ -10,7 +10,7 @@ import { ContactCards } from "./contact-cards";
 
 export function Contact() {
     return (
-        <Section id="contact">
+        <Section id="contact" containerClassName="scroll-mt-32">
             <SectionHeader>
                 <SectionTitle>Kontakt</SectionTitle>
             </SectionHeader>

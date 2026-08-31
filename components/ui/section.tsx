@@ -37,7 +37,7 @@ export function SectionContent({ className, children }: Props) {
 
 export function SectionTitle({ className, children }: Props) {
     return (
-        <h2 className={cn("text-2xl md:text-3xl font-medium", className)}>
+        <h2 className={cn("text-2xl md:text-3xl font-semibold", className)}>
             {children}
         </h2>
     )

@@ -8,9 +8,10 @@ import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
 import { Grid } from "../ui/grid";
 import z from "zod";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import confetti from "canvas-confetti";
 
 const WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL ?? "https://n8n.example.com/webhook/contact-form";
 
@@ -37,7 +38,9 @@ type ContactFormValues = z.infer<typeof contactFormSchema>
 
 export function ContactForm() {
 
-    const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+    const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
+
+    const submitButtonRef = useRef<HTMLButtonElement>(null)
 
     const { register, control, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactFormValues>({
         resolver: zodResolver(contactFormSchema),
@@ -51,7 +54,25 @@ export function ContactForm() {
         }
     })
 
-    async function onSubmit(values: ContactFormValues) {
+    async function playConfetti(event?: React.BaseSyntheticEvent) {
+        try {
+            const target = submitButtonRef.current
+            if (target && "getBoundingClientRect" in target) {
+                const rect = target.getBoundingClientRect()
+                const origin = {
+                    x: (rect.left + rect.width / 2) / window.innerWidth,
+                    y: (rect.top + rect.height / 2) / window.innerHeight,
+                }
+
+                await confetti({
+                    zIndex: 9999,
+                    origin
+                })
+            }
+        } catch (error) { }
+    }
+
+    async function onSubmit(values: ContactFormValues, event?: React.BaseSyntheticEvent) {
         setStatus("idle")
         try {
             const res = await fetch(WEBHOOK_URL, {
@@ -62,6 +83,7 @@ export function ContactForm() {
             if (!res.ok) throw new Error(`Webhook zwrócił status ${res.status}`)
             setStatus("success")
             reset()
+            await playConfetti(event)
         } catch (err) {
             setStatus("error")
         }
@@ -156,7 +178,7 @@ export function ContactForm() {
                     {errors.services && <FieldError>{errors.services.message}</FieldError>}
                 </Field>
                 <Field>
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button ref={submitButtonRef} type="submit" disabled={isSubmitting}>
                         {isSubmitting ? <>Wysyłanie... <Loader2 className="animate-spin" /></> : <>Wyślij <Send /></>}
                     </Button>
 

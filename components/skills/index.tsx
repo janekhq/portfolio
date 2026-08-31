@@ -64,7 +64,7 @@ export function Skills() {
     ]
 
     return (
-        <Section id="skills">
+        <Section id="skills" containerClassName="scroll-mt-32">
             <SectionHeader>
                 <SectionTitle>Umiejętności</SectionTitle>
                 <SectionDescription>

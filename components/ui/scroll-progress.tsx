@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { motion } from "motion/react"
-import type { LucideIcon } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
+import { Check, type LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Grid } from "./grid"
+import { useTheme } from "next-themes"
 
 export type ScrollProgressItem = {
     id: string
@@ -16,10 +17,12 @@ export type ScrollProgressItem = {
 
 function ScrollProgressIcon({ item, showLine }: { item: ScrollProgressItem, showLine: boolean }) {
 
+    const { theme } = useTheme()
+
     const iconRef = useRef<any>(null)
 
     return (
-        <div key={item.id} className="relative">
+        <div className="relative">
 
             {/* line */}
             {showLine && (
@@ -50,6 +53,20 @@ function ScrollProgressIcon({ item, showLine }: { item: ScrollProgressItem, show
                         <div className="absolute inset-[2px] flex items-center justify-center rounded-full bg-background">
                             <item.icon ref={iconRef} className="size-4" svgClassName='size-4' />
                         </div>
+
+                        <AnimatePresence>
+                            {item.circleProgress >= 1 && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="absolute -right-1.5 -bottom-1.5"
+                                >
+                                    <Check className="size-3 text-green-500 dark:text-green-400" />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                     </motion.div>
 
                     <span className="text-xs text-muted-foreground">
