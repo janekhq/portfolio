@@ -14,6 +14,7 @@ import { RocketIcon } from "./ui/rocket";
 import { MessageCircleMoreIcon } from "./ui/message-circle-more";
 import { TerminalIcon } from "./ui/terminal-icon";
 import { ContactCards } from "./contact/contact-cards";
+import { HyperText } from "./ui/hyper-text";
 
 function CallButton() {
 
@@ -61,7 +62,10 @@ export function Header() {
     return (
         <Container className="my-0! sticky top-0 z-50 gap-2 pointer-events-none">
             <Flex className='flex-row items-center h-16 gap-4 justify-between bg-background pointer-events-auto'>
-                <img src='./images/logo.svg' className="h-10" />
+                {/* <img src='./images/logo.svg' className="h-10" /> */}
+                <HyperText className="text-lg">
+                    Janek Zagórski
+                </HyperText>
                 <Flex className="flex-row gap-4">
                     <Flex>
                         <AnimatedThemeToggler className={buttonVariants({ variant: 'ghost', size: 'icon' })} />

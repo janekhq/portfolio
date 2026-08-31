@@ -8,7 +8,7 @@ import { CommissionProjects } from "./commission";
 
 export function Projects() {
     return (
-        <Section id='projects'>
+        <Section id='projects' containerClassName="scroll-mt-32">
             <SectionHeader>
                 <SectionTitle>Projekty</SectionTitle>
                 <SectionDescription>Lista projektów prywatnych jak i zleceń.</SectionDescription>
