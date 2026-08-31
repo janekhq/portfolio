@@ -50,14 +50,14 @@ function CallButton() {
     )
 }
 
-export function Header() {
+const items = [
+    { id: 'hero', label: 'Start', icon: RocketIcon, href: '#hero' },
+    { id: 'projects', label: 'Projekty', icon: BlocksIcon, href: '#projects' },
+    { id: "skills", label: "Umiejętności", icon: TerminalIcon, href: '#skills' },
+    { id: "contact", label: "Kontakt", icon: MessageCircleMoreIcon, href: '#contact' },
+]
 
-    const items = [
-        { id: 'hero', label: 'Start', icon: RocketIcon, href: '#hero' },
-        { id: 'projects', label: 'Projekty', icon: BlocksIcon, href: '#projects' },
-        { id: "skills", label: "Umiejętności", icon: TerminalIcon, href: '#skills' },
-        { id: "contact", label: "Kontakt", icon: MessageCircleMoreIcon, href: '#contact' },
-    ]
+export function Header() {
 
     return (
         <Container className="my-0! sticky top-0 z-50 gap-2 pointer-events-none">
