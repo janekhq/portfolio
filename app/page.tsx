@@ -1,3 +1,4 @@
+import { Contact } from "@/components/contact"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { Projects } from "@/components/projects"
@@ -17,9 +18,7 @@ export default function Page() {
 
             <Skills />
 
-            <Container id="contact" className="bg-secondary h-200">
-                kontakt
-            </Container>
+            <Contact />
 
         </Flex>
     )

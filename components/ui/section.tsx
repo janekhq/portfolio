@@ -29,7 +29,7 @@ export function SectionHeader({ className, children }: Props) {
 
 export function SectionContent({ className, children }: Props) {
     return (
-        <Flex className={cn("gap-4", className)}>
+        <Flex className={cn("gap-6", className)}>
             {children}
         </Flex>
     )
