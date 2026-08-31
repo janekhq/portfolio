@@ -6,6 +6,7 @@ import { Section, SectionContent, SectionDescription, SectionHeader, SectionTitl
 import { Grid } from "../ui/grid";
 import { MagicCard } from "../ui/magic-card";
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 export function Skills() {
 
@@ -75,14 +76,14 @@ export function Skills() {
                     {skills.map((item, index) => (
                         <MagicCard key={index} gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"} className="rounded-2xl">
                             <Item className='flex-1' variant='default'>
-                                <ItemMedia variant='image'>
-                                    <img src={item.img} className="w-full h-full object-contain!" />
+                                <ItemMedia variant='image' className={cn(item.img.includes('expo') ? 'dark:drop-shadow-2xl dark:drop-shadow-white' : '')}>
+                                    <img src={item.img} className={cn('w-full h-full object-contain!')} />
                                 </ItemMedia>
                                 <ItemContent>
                                     <ItemTitle className="w-full flex justify-between">
                                         {item.name}
                                         <ItemActions className='flex-row gap-1'>
-                                            {[...Array(item.stars).keys()].map(star => (<Star key={star} className="size-4 fill-amber-400" />))}
+                                            {[...Array(item.stars).keys()].map(star => (<Star key={star} className="size-4 fill-amber-400 dark:stroke-amber-400" />))}
                                             {[...Array(5 - (item.stars || 5)).keys()].map(star => (<Star key={star} className="size-4" />))}
                                         </ItemActions>
                                     </ItemTitle>
