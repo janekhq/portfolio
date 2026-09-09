@@ -8,6 +8,7 @@ import { ProjectCard } from "./project-card";
 import { SearchIcon, SearchIconHandle } from "../ui/search";
 import { ScanTextIcon, ScanTextIconHandle } from "../ui/scan-text";
 import { PaletteIcon, PaletteIconHandle } from "../ui/palette";
+import { Flex } from "../ui/flex";
 
 export function NextJSProjects() {
 
@@ -22,7 +23,11 @@ export function NextJSProjects() {
                 title="Wyszukiwarka internetowa"
                 description='Varely Search czyli moja własna wyszukiwarka internetowa.'
                 cardContent={<Button variant='secondary'>Sprawdź <ExternalLink /></Button>}
-                backgroundIcon={<SearchIcon ref={searchIconRef} size={128} className="brightness-0 invert opacity-10 mx-auto my-auto" />}
+                backgroundIcon={
+                    <Flex className="max-w-full max-h-48 mx-auto my-auto rounded-sm overflow-hidden">
+                        <img src='/images/search.jpg' alt="Varely Search - zrzut ekranu" className="max-w-full max-h-48 scale-150 translate-x-9 translate-y-12" />
+                    </Flex>
+                }
                 onMouseEnter={() => searchIconRef.current?.startAnimation()}
                 onMouseLeave={() => searchIconRef.current?.stopAnimation()}
             />
